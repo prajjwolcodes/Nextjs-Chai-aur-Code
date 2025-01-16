@@ -1,15 +1,3 @@
-import {
-  Html,
-  Head,
-  Font,
-  Preview,
-  Heading,
-  Row,
-  Section,
-  Text,
-  Button,
-} from '@react-email/components';
-
 interface VerificationEmailProps {
   username: string;
   otp: string;
@@ -17,48 +5,27 @@ interface VerificationEmailProps {
 
 export default function VerificationEmail({ username, otp }: VerificationEmailProps) {
   return (
-    <Html lang="en" dir="ltr">
-      <Head>
-        <title>Verification Code</title>
-        <Font
-          fontFamily="Roboto"
-          fallbackFontFamily="Verdana"
-          webFont={{
-            url: 'https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2',
-            format: 'woff2',
-          }}
-          fontWeight={400}
-          fontStyle="normal"
-        />
-      </Head>
-      <Preview>Here&apos;s your verification code: {otp}</Preview>
-      <Section>
-        <Row>
-          <Heading as="h2">Hello {username},</Heading>
-        </Row>
-        <Row>
-          <Text>
-            Thank you for registering. Please use the following verification
-            code to complete your registration:
-          </Text>
-        </Row>
-        <Row>
-          <Text>{otp}</Text>
-        </Row>
-        <Row>
-          <Text>
-            If you did not request this code, please ignore this email.
-          </Text>
-        </Row>
-        {/* <Row>
-            <Button
-              href={`http://localhost:3000/verify/${username}`}
-              style={{ color: '#61dafb' }}
-            >
-              Verify here
-            </Button>
-          </Row> */}
-      </Section>
-    </Html>
+    <div className="font-sans max-w-md mx-auto p-6 border border-gray-300 rounded-lg bg-gray-50">
+      <h2 className="text-2xl font-bold text-gray-800 text-center">Email Verification</h2>
+      <p className="mt-4 text-lg text-gray-600">
+        Hi <span className="font-semibold">{username}</span>,
+      </p>
+      <p className="mt-2 text-gray-600">
+        Thank you for signing up! Please use the following OTP (One-Time Password) to verify your email:
+      </p>
+      <div className="mt-4 text-xl font-bold text-green-600 text-center bg-green-50 border border-green-300 rounded-md py-2">
+        {otp}
+      </div>
+      <p className="mt-4 text-gray-600">
+        The OTP is valid for the next 1 hour. If you didn’t request this email, you can safely ignore it.
+      </p>
+      <p className="mt-6 text-gray-600">
+        Regards, <br />
+        <span className="font-semibold">Your Company Team</span>
+      </p>
+      <footer className="mt-6 text-sm text-gray-500 text-center border-t border-gray-300 pt-4">
+        This is an automated email. Please do not reply.
+      </footer>
+    </div>
   );
 }

@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     try {
         const { email, username, password } = await req.json();
         const existingUserByEmail = await UserModel.findOne({ email })
-        console.log(existingUserByEmail)
+
         if (existingUserByEmail)
             return Response.json({
                 message: "This email is already taken"
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
 
         console.log(email, username, password)
 
-        const verifyCode = Math.floor(Math.random() * 900000) + 100000;
+        const verifyCode = (Math.floor(Math.random() * 900000) + 100000).toString()
         const verifyCodeExpiry = new Date()
         verifyCodeExpiry.setHours(verifyCodeExpiry.getHours() + 1)
         const hashedPassword = bcrypt.hashSync(password, 10)
@@ -41,10 +41,15 @@ export async function POST(req: NextRequest) {
 
         await newUser.save()
 
+        const emailResponse = await sendVerificationEmail(email, username, verifyCode)
+        console.log(emailResponse)
+
+
         return Response.json({
-            message: "User Succesfully Created",
-            // user: newUser
+            message: "User Succesfully Created, Please verify your Email",
+            user: newUser
         })
+
 
     } catch (error) {
         console.error("Error in Signing up a user", error);
@@ -54,7 +59,6 @@ export async function POST(req: NextRequest) {
         });
     }
 
-    // sendVerificationEmail(email, username, verifyCode);
 }
 
 
