@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
 
         if (!isOtpExpired) {
             return Response.json({
-                message: "OTP is already Expired",
+                message: "OTP is already Expired please sign in again yo g",
                 proceed: false
             })
         }
