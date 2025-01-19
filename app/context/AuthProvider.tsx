@@ -3,11 +3,11 @@
 import { SessionProvider } from "next-auth/react"
 
 export default function AuthProvider({
-    childern,
-}: { childern: React.ReactNode }) {
+    children,
+}: { children: React.ReactNode }) {
     return (
         <SessionProvider>
-            {childern}
+            {children}
         </SessionProvider>
     )
 }

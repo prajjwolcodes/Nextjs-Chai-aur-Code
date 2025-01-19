@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 
         })
 
-        await newUser.save()
+        // await newUser.save()
 
         const emailResponse = await sendVerificationEmail(email, username, verifyCode)
         console.log(emailResponse)
@@ -65,6 +65,7 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
     const users = await UserModel.find()
     return Response.json({ users })
-
+    // console.log(users)
+    // 
 
 }
