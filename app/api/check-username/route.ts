@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
     } catch (error) {
         console.log("Error in checking unique username");
         return Response.json({
-            message: error.message
+            message: error.message || "Error in checking unique username"
         })
     }
 }
