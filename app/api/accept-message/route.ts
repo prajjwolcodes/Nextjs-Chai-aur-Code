@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
         })
     }
 
-    const userId = user._id
+    const userId = user?._id
 
     try {
         const existingUser = await UserModel.findById(userId)
@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
         })
     }
 
-    const userId = user._id
+    const userId = user?._id
     const acceptMessageFlag = await req.json()
 
     try {
@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
         })
 
     } catch (error) {
-        console.log("Error in cfetching message acceptance status");
+        console.log("Error in fetching message acceptance status");
         return Response.json({
             message: error.message || "Error in cfetching message acceptance status"
         })
