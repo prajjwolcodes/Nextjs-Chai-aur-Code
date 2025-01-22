@@ -23,9 +23,8 @@ export async function POST(req: NextRequest) {
                 status: 400
             })
 
-        console.log(email, username, password)
 
-        const verifyCode = (Math.floor(Math.random() * 900000) + 100000).toString()
+        const verifyCode = (Math.floor(Math.random() * 90000) + 10000).toString()
         const verifyCodeExpiry = new Date()
         verifyCodeExpiry.setHours(verifyCodeExpiry.getHours() + 1)
         const hashedPassword = bcrypt.hashSync(password, 10)

@@ -32,10 +32,13 @@ export async function POST(req: NextRequest) {
         existingUser.isVerfied = true
         await existingUser.save()
 
+
         return Response.json({
             message: "OTP matched you are now verified",
             proceed: true
         })
+
+
 
     } catch (error) {
         console.log("Error in verifying OTP");
