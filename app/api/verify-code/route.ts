@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
             })
         }
 
-        const isOtpExpired = new Date(existingUser.verifyCodeExpiry) < new Date()
+        const isOtpExpired = new Date(existingUser.verifyCodeExpiry) > new Date()
 
         if (!isOtpExpired) {
             return Response.json({

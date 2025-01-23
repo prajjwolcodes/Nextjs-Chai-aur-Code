@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
 
         })
 
-        // await newUser.save()
+        await newUser.save()
 
         const emailResponse = await sendVerificationEmail(email, username, verifyCode)
         console.log(emailResponse)

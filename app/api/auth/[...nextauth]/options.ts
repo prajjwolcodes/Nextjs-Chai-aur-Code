@@ -23,8 +23,8 @@ export const authOptions: NextAuthOptions = {
                         throw new Error("User doesnot exist with this email")
                     if (!user.isVerfied)
                         throw new Error("Verify your account before login")
-
-                    const isPasswordCorrect = bcrypt.compareSync(credentials.email, user.password)
+                    console.log(credentials, user.password);
+                    const isPasswordCorrect = bcrypt.compareSync(credentials.password, user.password)
                     if (!isPasswordCorrect)
                         throw new Error("Incorrect Password")
                     else
