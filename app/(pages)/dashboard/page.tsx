@@ -1,8 +1,11 @@
 import React from 'react'
+import MessageCard from "@/components/MessageCard"
 
 const page = () => {
     return (
-        <div>page</div>
+        <div>Dashboard
+            <MessageCard />
+        </div>
     )
 }
 
