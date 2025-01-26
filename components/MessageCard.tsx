@@ -20,29 +20,16 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import axios from "axios"
 import { Message } from "app/models/userModel"
-import toast from "react-hot-toast"
 
 type messageCardProps = {
     message: Message
+    handleDelete: (messageid: string) => void
 }
 
-const MessageCard = ({ message }: messageCardProps) => {
-    async function handleDelete(params) {
-        try {
-            const res = await axios.delete(`/api/delete-message/${message?._id}`)
-            toast.success(res.data.message);
+const MessageCard = ({ message, handleDelete }: messageCardProps) => {
+    console.log(message)
 
-        } catch (error) {
-            console.log("Error in deleting message", error);
-            toast.error("Error deleting the message");
-
-
-
-        }
-
-    }
     return (
 
 
@@ -51,7 +38,7 @@ const MessageCard = ({ message }: messageCardProps) => {
                 <CardHeader className="bg-gray-50 p-6">
                     <div className="flex justify-between items-center">
                         <div>
-                            <CardTitle className="text-2xl font-bold text-gray-800">Feedback Details</CardTitle>
+                            <CardTitle className="text-2xl font-bold text-gray-800">{message.content}</CardTitle>
                             <CardDescription className="text-gray-500 mt-2">Review and manage your submitted feedback</CardDescription>
                         </div>
                         <AlertDialog>
@@ -72,7 +59,7 @@ const MessageCard = ({ message }: messageCardProps) => {
                                 </AlertDialogHeader>
                                 <AlertDialogFooter className="flex space-x-4">
                                     <AlertDialogCancel className="border-gray-300 hover:bg-gray-100">Cancel</AlertDialogCancel>
-                                    <AlertDialogAction onClick={handleDelete} className="bg-red-500 hover:bg-red-600 text-white">Continue</AlertDialogAction>
+                                    <AlertDialogAction onClick={() => handleDelete(message?._id as string)} className="bg-red-500 hover:bg-red-600 text-white">Continue</AlertDialogAction>
                                 </AlertDialogFooter>
                             </AlertDialogContent>
                         </AlertDialog>

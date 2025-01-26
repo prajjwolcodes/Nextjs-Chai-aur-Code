@@ -2,8 +2,10 @@ import { getServerSession } from "next-auth";
 import { NextRequest } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/options";
 import UserModel from "../../models/userModel";
+import dbConnect from "app/lib/dbConnect";
 
 export async function GET(req: NextRequest) {
+    await dbConnect()
     const session = await getServerSession(authOptions)
     const user = session?.user
 
@@ -16,7 +18,8 @@ export async function GET(req: NextRequest) {
     const userId = user?._id
 
     try {
-        const existingUser = await UserModel.findById(userId)
+        console.log(userId, "SDSDDSD");
+        const existingUser = await UserModel.findOne({ _id: userId })
         if (!existingUser) {
             return Response.json({
                 message: "No user Found"
@@ -29,9 +32,9 @@ export async function GET(req: NextRequest) {
         })
 
     } catch (error) {
-        console.log("Error in cfetching message acceptance status");
+        console.log("Error in fetching message acceptance status", error);
         return Response.json({
-            message: error.message || "Error in cfetching message acceptance status"
+            message: error.message || "Error in fetching message acceptance status"
         })
     }
 
@@ -48,11 +51,11 @@ export async function POST(req: NextRequest) {
     }
 
     const userId = user?._id
-    const acceptMessageFlag = await req.json()
+    const { acceptMessages } = await req.json()
 
     try {
         const updatedUser = await UserModel.findByIdAndUpdate(userId, {
-            isAcceptingMessage: acceptMessageFlag,
+            isAcceptingMessage: acceptMessages,
             new: true
         })
 
@@ -65,7 +68,7 @@ export async function POST(req: NextRequest) {
         await updatedUser.save()
 
         return Response.json({
-            message: "message acceptance status fetched sucessfully",
+            message: "message acceptance status changed sucessfully",
             isAcceptingMessage: updatedUser.isAcceptingMessage,
             updatedUser
 

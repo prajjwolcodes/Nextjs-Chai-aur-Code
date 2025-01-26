@@ -21,10 +21,15 @@ import {
 import { Input } from "@/components/ui/input"
 import Link from 'next/link'
 import { signInSchema } from 'app/schemas/signInSchema'
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 
 const page = () => {
     const router = useRouter()
+    const { data: session } = useSession()
+    const user = session?.user
+
+    if (user)
+        router.replace("/dashboard")
     const [isLoading, setIsLoading] = useState(false)
 
     const form = useForm({

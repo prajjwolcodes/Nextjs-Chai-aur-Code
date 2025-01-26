@@ -1,7 +1,5 @@
 import { NextRequest } from "next/server";
 import dbConnect from "../../lib/dbConnect";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/options";
 import UserModel, { Message } from "../../models/userModel";
 
 export async function POST(req: NextRequest) {
@@ -18,13 +16,19 @@ export async function POST(req: NextRequest) {
 
         if (!user.isAcceptingMessage)
             return Response.json({
-                message: "User is not accepting messages right noe"
+                message: "User is not accepting messages right now",
+                proceed: false
             })
 
         const newMessage = { content, createdAt: new Date() }
 
         user.messages.push(newMessage as Message)
         await user.save()
+
+        return Response.json({
+            message: "Message Succesfully send",
+            proceed: true
+        })
 
     } catch (error) {
         console.log("Error in Sending messages");

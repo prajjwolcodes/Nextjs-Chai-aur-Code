@@ -24,7 +24,7 @@ import Link from 'next/link'
 
 const page = () => {
     const router = useRouter()
-    const [username, setUsername] = useState<string>('ram')
+    const [username, setUsername] = useState<string>('')
     const [usernameAvailability, setUsernameAvailability] = useState('')
     const [isCheckingUsername, setIsCheckingUsername] = useState(false)
 

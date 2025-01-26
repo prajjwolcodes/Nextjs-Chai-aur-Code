@@ -2,6 +2,7 @@
 'use client'
 
 import { signOut, useSession } from 'next-auth/react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
@@ -58,11 +59,9 @@ const Navbar = () => {
           md:translate-x-0 transition-transform duration-300 ease-in-out
         `}>
                     <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
-                        <a href="/" className="text-gray-700 hover:text-blue-600 transition duration-300">Home</a>
-                        <a href="/about" className="text-gray-700 hover:text-blue-600 transition duration-300">About</a>
-                        <a href="/services" className="text-gray-700 hover:text-blue-600 transition duration-300">Services</a>
-                        <a href="/portfolio" className="text-gray-700 hover:text-blue-600 transition duration-300">Portfolio</a>
-                        <a href="/contact" className="text-gray-700 hover:text-blue-600 transition duration-300">Contact</a>
+                        <Link href="/" className="text-gray-700 hover:text-blue-600 transition duration-300">Home</Link>
+                        <Link href={`/you/${user?.username}`} className="text-gray-700 hover:text-blue-600 transition duration-300">You</Link>
+                        <Link href={`/dashboard`} className="text-gray-700 hover:text-blue-600 transition duration-300">Dashboard</Link>
 
                         <button
                             onClick={handleAuth}
