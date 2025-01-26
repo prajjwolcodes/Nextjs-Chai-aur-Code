@@ -8,9 +8,8 @@ export async function POST(req: NextRequest) {
 
     try {
         // Use a Hugging Face text generation model
-        const feedbackPrompt = `Generate 4 unique, professional, and positive feedback messages. 
-    Ensure each message is distinct. Format each message on a new line, starting with a bullet point. 
-    Do not number the messages.`;
+        const feedbackPrompt = `Generate 4 unique, professional, and positive feedback messages with no more than eight words.  
+    Do not number the messages.Ensure each message is distinct. Format each message on a new line, `;
 
         const out = await hf.chatCompletion({
             model: "mistralai/Mistral-7B-Instruct-v0.2",

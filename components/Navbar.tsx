@@ -12,8 +12,6 @@ const Navbar = () => {
 
     const { data: session } = useSession()
     const user = session?.user
-    console.log(user);
-
     const handleAuth = async () => {
         if (user) {
             await signOut()
@@ -60,7 +58,7 @@ const Navbar = () => {
         `}>
                     <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
                         <Link href="/" className="text-gray-700 hover:text-blue-600 transition duration-300">Home</Link>
-                        <Link href={`/you/${user?.username}`} className="text-gray-700 hover:text-blue-600 transition duration-300">You</Link>
+                        <Link href={`/you/${user ? user?.username : "guest"}`} className="text-gray-700 hover:text-blue-600 transition duration-300">You</Link>
                         <Link href={`/dashboard`} className="text-gray-700 hover:text-blue-600 transition duration-300">Dashboard</Link>
 
                         <button

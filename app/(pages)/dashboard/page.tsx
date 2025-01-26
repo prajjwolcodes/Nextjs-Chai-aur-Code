@@ -117,7 +117,10 @@ const Page = () => {
         fetchMessages();
     }, [session, fetchIsAcceptingMessageStatus, fetchMessages]);
 
-    if (!session || !session.user) return <div>Please Login</div>;
+    if (!session || !session.user) return <div className="h-[500px] w-full flex flex-col justify-center items-center">
+        <h1 className="text-2xl font-bold text-gray-800">Feedboo</h1>
+        <h2 className="text-base">Please Login</h2>
+    </div>;
     if (status === "loading") return <div>Loading...</div>;
     console.log(messages, "sdadsadas")
 
