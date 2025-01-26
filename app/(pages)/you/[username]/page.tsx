@@ -23,8 +23,8 @@ import toast from 'react-hot-toast'
 const page = () => {
     const { username } = useParams()
     const [accepttanceStatus, setAccepttanceStatus] = useState<boolean>()
-    const [input, setInput] = useState("");
-    const [response, setResponse] = useState("");
+    const [response, setResponse] = useState<string[]>([]);
+    const [loading, setLoading] = useState(false)
 
     const form = useForm<z.infer<typeof messageSchema>>({
         resolver: zodResolver(messageSchema),
@@ -32,9 +32,16 @@ const page = () => {
             content: "",
         },
     })
+
+    const handleFeedbackClick = (message: string) => {
+        // Set the form value to the clicked feedback message
+        form.setValue('content', message);
+    }
+
     const handleSubmit = async () => {
+        setLoading(true)
         try {
-            const res = await axios.post("/api/huggingface", { text: input },
+            const res = await axios.post(`/api/huggingface?t=${Date.now()}`,
                 {
                     headers: {
                         'Authorization': `Bearer ${process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY}`, // Replace with your Hugging Face API key
@@ -44,8 +51,10 @@ const page = () => {
             setResponse(res.data.message);
         } catch (error) {
             console.error("Error fetching AI response:", error);
-            setResponse("Something went wrong.");
+        } finally {
+            setLoading(false)
         }
+
     };
 
 
@@ -59,6 +68,7 @@ const page = () => {
             else {
                 setAccepttanceStatus(true)
                 toast.success(res.data.message)
+                form.reset()
             }
 
         } catch (error) {
@@ -89,25 +99,29 @@ const page = () => {
                 </form>
             </Form>
             <div className="p-6 space-y-4">
-                <h1 className="text-2xl font-bold">Hugging Face Integration</h1>
-                <textarea
-                    className="w-full p-2 border rounded-lg"
-                    placeholder="Enter text..."
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                />
+                <h1 className="text-2xl font-bold">Your AI friend to suggest feedbacks for me</h1>
+
                 <button
-                    className="px-4 py-2 text-white bg-blue-500 rounded-lg"
+                    className={`px-4 py-2 text-white ${loading ? "bg-blue-200" : "bg-blue-500"} rounded-lg`}
                     onClick={handleSubmit}
-                >
-                    Generate Text
+                    disabled={loading}
+                >  Generate Feedback
+
                 </button>
-                {response && (
-                    <div className="p-4 mt-4 border rounded-lg">
-                        <h2 className="text-lg font-semibold">AI Response:</h2>
-                        <p>{response}</p>
-                    </div>
-                )}
+                {response.length !== 0 &&
+                    (
+                        response.map((message, index) => (
+                            <div
+                                key={index}
+                                className="p-1 bg-gray-100 rounded-md"
+                            >
+                                <button onClick={() => handleFeedbackClick(message)}>
+                                    {message}
+
+                                </button>
+                            </div>
+                        ))
+                    )}
             </div>
         </>
     )
