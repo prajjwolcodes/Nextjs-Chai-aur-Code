@@ -41,8 +41,7 @@ const page = () => {
                     },
                 }
             );
-            // setResponse(res.data.result.generated_text);
-            console.log(res)
+            setResponse(res.data.message);
         } catch (error) {
             console.error("Error fetching AI response:", error);
             setResponse("Something went wrong.");
