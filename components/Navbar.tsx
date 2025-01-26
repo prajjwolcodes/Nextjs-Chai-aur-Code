@@ -60,6 +60,7 @@ const Navbar = () => {
                         <Link href="/" className="text-gray-700 hover:text-blue-600 transition duration-300">Home</Link>
                         <Link href={`/you/${user ? user?.username : "guest"}`} className="text-gray-700 hover:text-blue-600 transition duration-300">You</Link>
                         <Link href={`/dashboard`} className="text-gray-700 hover:text-blue-600 transition duration-300">Dashboard</Link>
+                        <Link href={`/ai`} className="text-gray-700 hover:text-blue-600 transition duration-300">AI</Link>
 
                         <button
                             onClick={handleAuth}
