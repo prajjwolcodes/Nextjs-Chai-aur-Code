@@ -47,6 +47,9 @@ export const authOptions: NextAuthOptions = {
                         return user
                 } catch (error) {
                     throw new Error(error)
+                    // const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+                    // console.log(errorMessage);
+                    // throw new Error(errorMessage)
                 }
 
 
